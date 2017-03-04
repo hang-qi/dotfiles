@@ -1,0 +1,48 @@
+" Disable plugins from spf13 default.
+" Indent guide lines are distracting.
+UnBundle 'nathanaelkane/vim-indent-guides'
+" Remove Gist plugins.
+UnBundle 'mattn/webapi-vim'
+UnBundle 'mattn/gist-vim'
+
+" Python-mode is too slow and create a lot of annoying tags.
+UnBundle 'klen/python-mode'
+
+
+" Additional plugins
+
+" Add google codefmt
+" Add maktaba and codefmt to the runtimepath.
+" (The latter must be installed before it can be used.)
+Plugin 'google/vim-maktaba'
+Plugin 'google/vim-codefmt'
+" Also add Glaive, which is used to configure codefmt's maktaba flags. See
+" `:help :Glaive` for usage."
+Plugin 'google/vim-glaive'
+" The "call glaive#Install()" should go after the "call vundle@end()"
+" see .vimrc.local for the line.
+
+
+" Show relative line numbers when moving cursor.
+Plugin 'myusuf3/numbers.vim'
+
+" Tmux vim panel switch.
+Plugin 'christoomey/vim-tmux-navigator'
+
+"---------------------------------------------
+" Notes and Markdown Support
+" Vimwiki
+Plugin 'vimwiki/vimwiki'
+
+" Markdown filetype.
+" Plugin 'tpope/vim-markdown'
+
+" Markdown preview, depends on instant-markdown-d executable from npm.
+Plugin 'suan/vim-instant-markdown'
+
+" Markdown mode
+Plugin 'plasticboy/vim-markdown'
+
+" Template plugin, specify file templates for certain file types.
+Plugin 'aperezdc/vim-template.git'
+

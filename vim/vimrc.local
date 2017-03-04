@@ -1,0 +1,159 @@
+" Enable glaive#Install() after vundle#end()
+call glaive#Install()
+
+" Vim and tmux navigator
+let g:tmux_navigator_no_mappings=1
+let g:tmux_navigator_save_on_switch=1
+nnoremap <silent> <c-h> :TmuxNavigateLeft<CR>
+nnoremap <silent> <c-j> :TmuxNavigateDown<CR>
+nnoremap <silent> <c-k> :TmuxNavigateUp<CR>
+nnoremap <silent> <c-l> :TmuxNavigateRight<CR>
+nnoremap <silent> <c-\> :TmuxNavigatePrevious<CR>
+
+" Fix yank/paste error when working with tmux.
+set clipboard=
+if $TMUX == ''
+    set clipboard+=unnamed
+endif
+
+" Google's formatting plugin.
+" The default mapping is \= (or <leader>= if g:mapleader has a custom value),
+" with
+" - \== formatting the current line or selected lines in visual mode
+"   (:FormatLines).
+" - \=b formatting the full buffer (:FormatCode).
+"
+" To bind :FormatLines to the same key in insert and normal mode, add:
+"   noremap <C-K> :FormatLines<CR>
+"   inoremap <C-K> <C-O>:FormatLines<CR>
+" Enable mapping and set the clang style to Google.
+Glaive codefmt plugin[mapping] clang_format_style='Google'
+
+" Change python formatter to yapf
+autocmd FileType python let b:codefmt_formatter='yapf'
+
+" Enable autoformatting on save.
+augroup autoformat_settings
+    " Add formatter for cpp,py,js
+    autocmd FileType c,cpp,proto AutoFormatBuffer clang-format
+    autocmd FileType python AutoFormatBuffer yapf
+augroup END
+
+" Toggle NERDTree as a sidebar.
+" This mapping is coincident with editors like sublime and atom.
+map <leader>z :NERDTreeTabsToggle<CR>
+
+" Vimwiki settings
+let g:vimwiki_list = [{
+            \ 'path': '~/Dropbox/Notes/wiki/',
+            \ 'path_html': '~/Dropbox/Notes/wiki-html/',
+            \ 'template_path': '~/Dropbox/Notes/wiki-template',
+            \ 'template_default': 'index',
+            \ 'template_ext': '.html',
+            \ 'syntax': 'markdown',
+            \ 'ext': '.md'}]
+" Deprecated generator. Use MkDocs instead.
+" 'custom_wiki2html': 'vimwiki_markdown'
+let g:vimwiki_conceallevel = 0
+let g:vimwiki_global_ext = 0
+nmap <F7> :VimwikiToggleListItem<CR>
+
+" Orgmode <LocalLeader>
+let maplocalleader=','
+
+" Mapping for tagbar. It will display ctags of the current file in a new vim
+" panel.
+" On mac, need to install 'ctags' through homebrew for this to work.
+nmap <F8> :TagbarToggle<CR>
+
+" Python compiled with YouCompleteMe
+let g:ycm_path_to_python_interpreter = 'python2'  "'/usr/local/bin/python'
+
+" Use YCM and UltiSnips
+let g:UltiSnipSnipsExpandTrigger = '<c-j>'
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "my-vim-snippets"]
+
+" Generic markdown filetype.
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
+" Instant Markdown Preview.
+" Avoid update in real time.
+let g:instant_markdown_slow = 1
+
+" plasticboy/vim-markdown
+" Disable link concealing
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_fenced_languages = [
+    \ 'c++=cpp',
+    \ 'viml=vim',
+    \ 'bash=sh',
+    \'python=py']
+" Enable math
+let g:vim_markdown_math = 1
+" Use indent 2
+let g:vim_markdown_new_list_item_indent = 2
+
+" Settings for NerdCommenter
+" Add spaces after comment delimiters by default.
+let g:NERDSpaceDelims = 1
+" Align line-wise comment delimiters flush left instead of following the code
+" intendtation
+let g:NERDDefaultAlign = 'left'
+
+" Pymode
+" Use pylint as linter
+"let g:pymode_lint_checkers = ['pylint']
+" Ignore some of the warnings
+"   R0912, too many branches
+"   R0914, too many local variables
+"   R0903, too few public methods
+"   C0103, invalid name
+"   C0111, missing docstring
+"   W0511, TODO, FIXME labels
+"let g:pymode_lint_ignore = 'R0912,R0914,R0903,C0103,C0111,W051'
+
+" Disable syntastic python checker for faster save.
+" pylint is slow
+let g:syntastic_python_checkers = ['pyflakes']
+
+" Configs for aperezdc/vim-template
+" Use customized template path.
+let g:templates_directory = ['~/.vim/my-vim-templates']
+
+" Note that when code is pasted via the terminal, vim by default does not detect
+" that the code is pasted (as opposed to when using vim's paste mappings), which
+" leads to incorrect indentation when indent mode is on.
+" To work around this, use ":set paste" / ":set nopaste" to toggle paste mode.
+" You can also use a plugin to:
+" - enter insert mode with paste (https://github.com/tpope/vim-unimpaired)
+" - auto-detect pasting (https://github.com/ConradIrwin/vim-bracketed-paste)
+
+filetype plugin indent on
+syntax on
+
+" Solarized style.
+set t_Co=256
+syntax enable
+set background=dark
+let g:solarized_termcolors=16
+colorscheme solarized
+set conceallevel=0
+
+" Show line numbers and a ruler at 80.
+set nu
+set textwidth=79
+set colorcolumn=+1
+
+" Disable spell check.
+set nospell
+
+" Enable mouse for switching tabs.
+set mouse=a
+
+" Mappings for 'numbers' plugin.
+nnoremap <F3> :NumbersToggle<CR>
+
+" Indentations
+" clang indentation
+autocmd FileType c,cpp,objc setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
+autocmd FileType md setlocal tabstop=2 expandtab shiftwidth=2 softtabstop=2
